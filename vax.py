@@ -1,14 +1,12 @@
 from contextlib import nullcontext
+from person import *
 from time import time
+import collections as c
 
 
 #Want to be able to do something like add another vaccine mfg, add a new phase, and modify an existing phase for eligibility
 
 #top level class that includes our simulation
-
-
-
-
 
 #simulation is an OOP of a point in time - defined by what are the current authorizations we have
 class simulation:
@@ -19,12 +17,6 @@ class simulation:
     def bootstrap():
         #put the authorizations into their phases
         return True
-    
-        
-        
-        
-
-
 
 class vaxMfg:
     def __init__(self, name =''):
@@ -38,6 +30,7 @@ class vaxHistory:
         self.intervals = ''
         self.vaxMfg =''
 
+#Vax phase is primary series, booster 1, booster 2, etc.
 class vaxPhase():
     def __init__(self,name='',authorizations=[]):
         self.name = name
@@ -50,43 +43,36 @@ class vaxPhase():
         return self.name
 
 
-class timeline(list):
+class timeline(c.UserList):
     def __init__(self, name = ''):
         self.name = ''
+        self.data =[]
     def addPhase(self,newPhase = vaxPhase):
         self.append(newPhase)
+    def returnAuthorizations(self):
+        authorizations = []
+        for phase in self:
+            for authorization in phase:
+                authorizations.append(authorization)
+    authorizations = property(returnAuthorizations)
 
 class vaxAuthorization:
-    def __init__(self,name='',mfgs=[vaxMfg],intervals=[], volume=0, eligibleAges ='18+'):
+    def __init__(self,name='',mfgs=[],intervals=[], volume=0, eligibleAges ='18+'):
         self.name = name
-        self.mfgs =[]
+        self.mfgs =mfgs
         self.volume = 0
         self.doses = len(self.mfgs)
         self.intervals = intervals
         self.eligibileAges=eligibleAges
-        def __str__(self):
+    def __str__(self):
             return self.name
         #can vaccines within this phases be mixed?
 
-class person:
-    def __init__(self,name='tom',ageGroup='18+',timeline=timeline):
-        self.name = name
-        self.ageGroup = ageGroup
-        self.vaxHistory = []
-        self.timeline = timeline
-    #input a vaccine manufacturer for this person next's shot, and we'll check whether they are eligible
-    def getShot(self, date, mfg):
-        self.vaxHistory.append((date,mfg))
-    #This function is meant to check whether a person can 
-    def vaxLog(self):
-        for date,vax in self.vaxHistory:
-            print(date,vax)
 
-    def check(self):
-        for phase in timeline:
-            for authorization in phase.authorizations:
-                if authorization.eligibileAges == self.ageGroup:
-                    print(authorization)
+
+
+
+    
 
 
 

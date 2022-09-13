@@ -27,10 +27,12 @@ primaryPhase.addAuthorization(newAuth=pfizerPrimaryImmuno)
 firstBoosterPhase = vaxPhase(name='First Booster')
 myTimeline.addPhase(newPhase = firstBoosterPhase)
 #add a Pfizer booster for seniors
-pfizerBooster = vaxAuthorization(name='Pfizer First Booster',mfgs=[pfizer],intervals=[120],volume=0.5,eligibleAges='65+')
+pfizerBooster = vaxAuthorization(name='Pfizer First Booster',mfgs=[pfizer],intervals=[120],volume=0.5,eligibleAges='18+')
 
 firstBoosterPhase.addAuthorization(pfizerBooster)
 
 tom=person(timeline=myTimeline)
 tomShot=tom.getShot(date=1,mfg=pfizer)
-tom.check()
+tom.eligiblePhases
+tom.eligibleAuthorizations
+tom.compareLog()
