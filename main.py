@@ -33,6 +33,8 @@ firstBoosterPhase.addAuthorization(pfizerBooster)
 
 tom=person(timeline=myTimeline)
 tomShot=tom.getShot(date=1,mfg=pfizer)
+tom.getShot(date=29,mfg=pfizer)
 tom.eligiblePhases
 tom.eligibleAuthorizations
 tom.compareLog()
+tom.receivedAuthorizations

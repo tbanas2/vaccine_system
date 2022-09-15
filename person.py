@@ -10,7 +10,7 @@ class person:
         self.receivedAuthorizations = []
     #input a vaccine manufacturer for this person next's shot, and add it to their record
     def getShot(self, date, mfg):
-        self.vaxHistory.append((date,mfg.name))
+        self.vaxHistory.append((date,mfg))
     #This function is meant to check whether a person can 
     def vaxLog(self):
         for date,vax in self.vaxHistory:
@@ -52,7 +52,10 @@ class person:
         #check each eligible authorization against vax log - for first one that matches, add it to received authorizations and delete from temp vax log to move index ahead
         for authorization in self.eligibleAuthorizations:
             seriesCount = authorization.doses
-            if receivedVaxes[0:seriesCount] == authorization.mfgs:
+            personVaxes = receivedVaxes[0:seriesCount]
+            if personVaxes == authorization.mfgs:
+                #if vax log contains the authorizations vaxes, add the auth to personal log and 
                 self.receivedAuthorizations.append(authorization)
-                receivedVaxes.pop(range(0,seriesCount))
+                #remove the vaxes for the auth we just added so we can move onto the next sets
+                receivedVaxes = receivedVaxes[seriesCount:]
 
